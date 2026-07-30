@@ -1,16 +1,11 @@
-package main
+FROM golang:1.24
 
-import (
-	"fmt"
-	"net/http"
-)
+WORKDIR /app
 
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Go API Microservice")
-}
+COPY . .
 
-func main() {
-	http.HandleFunc("/", home)
-	fmt.Println("API running on port 8080")
-	http.ListenAndServe(":8080", nil)
-}
+RUN go build -o api
+
+EXPOSE 8080
+
+CMD ["./api"]
