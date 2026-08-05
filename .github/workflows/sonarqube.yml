@@ -1,4 +1,4 @@
-name: SonarQube Analysis
+name: SonarQube Scan
 
 on:
   push:
@@ -10,55 +10,19 @@ on:
 
 jobs:
 
-  frontend-scan:
-    name: Frontend SonarQube Scan
-    runs-on: self-hosted
+  sonarqube-scan:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: SonarQube Frontend Scan
+      - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
-        working-directory: frontend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-
-  backend-scan:
-    name: Backend SonarQube Scan
-    runs-on: self-hosted
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: SonarQube Backend Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        working-directory: backend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-
-  api-scan:
-    name: API SonarQube Scan
-    runs-on: self-hosted
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: SonarQube API Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        working-directory: api
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
