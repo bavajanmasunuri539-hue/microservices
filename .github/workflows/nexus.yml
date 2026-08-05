@@ -6,10 +6,8 @@ on:
       - main
 
 jobs:
-
-  nexus:
-
-    runs-on: ubuntu-latest
+  build-and-push:
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -19,11 +17,10 @@ jobs:
           - api
 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Login to Nexus
+      - name: Login to Local Nexus
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.NEXUS_URL }}
