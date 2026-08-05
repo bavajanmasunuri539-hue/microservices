@@ -1,4 +1,4 @@
-name: SonarQube Scan
+name: SonarQube Analysis
 
 on:
   push:
@@ -10,20 +10,22 @@ on:
       - main
 
 jobs:
+
   sonarqube:
+
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         service:
-          - api
-          - backend
           - frontend
+          - backend
+          - api
 
     steps:
 
-      - name: Checkout Code
-        uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -33,4 +35,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
-          projectBaseDir: ${{ matrix.service }}
+          projectBaseDir: ./${{ matrix.service }}

@@ -1,10 +1,17 @@
-FROM golang:1.24
+FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-COPY . .
+COPY go.mod ./
+COPY main.go ./
 
-RUN go build -o api
+RUN go build -o api main.go
+
+FROM alpine:3.20
+
+WORKDIR /app
+
+COPY --from=builder /app/api .
 
 EXPOSE 8080
 

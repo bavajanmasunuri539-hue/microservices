@@ -1,12 +1,24 @@
-const http = require("http");
+const express = require("express");
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {
-        "Content-Type": "text/plain"
+const app = express();
+
+const PORT = 3000;
+
+app.get("/", (req, res) => {
+    res.json({
+        message: "Hello from Frontend",
+        service: "frontend",
+        status: "UP"
     });
-    res.end("Frontend Microservice Version 2");
 });
 
-server.listen(3000, () => {
-    console.log("Frontend running on port 3000");
+app.get("/health", (req, res) => {
+    res.json({
+        service: "frontend",
+        status: "UP"
+    });
+});
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Frontend running on port ${PORT}`);
 });

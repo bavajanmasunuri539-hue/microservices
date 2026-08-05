@@ -1,16 +1,48 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Go API Microservice")
+type Response struct {
+	Message string `json:"message"`
+	Service string `json:"service"`
+	Status  string `json:"status"`
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	response := Response{
+		Message: "Hello from Go API",
+		Service: "api",
+		Status:  "UP",
+	}
+
+	json.NewEncoder(w).Encode(response)
+}
+
+func health(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	response := Response{
+		Service: "api",
+		Status:  "UP",
+	}
+
+	json.NewEncoder(w).Encode(response)
 }
 
 func main() {
-	http.HandleFunc("/", home)
-	fmt.Println("API running on port 8080")
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", handler)
+	http.HandleFunc("/health", health)
+
+	log.Println("API service running on port 8080")
+
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
