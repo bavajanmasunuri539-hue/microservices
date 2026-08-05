@@ -11,7 +11,7 @@ on:
 jobs:
   frontend-sonarqube:
     name: Frontend SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Source
@@ -27,7 +27,7 @@ jobs:
 
   backend-sonarqube:
     name: Backend SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Source
@@ -43,7 +43,7 @@ jobs:
 
   api-sonarqube:
     name: API SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Source
