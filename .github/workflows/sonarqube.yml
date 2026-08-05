@@ -20,14 +20,15 @@ jobs:
       - name: SonarQube Scan - Frontend
         uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: frontend
 
   backend-sonarqube:
     name: Backend SonarQube Scan
     runs-on: self-hosted
+    needs: frontend-sonarqube
 
     steps:
       - name: Checkout Repository
@@ -36,14 +37,15 @@ jobs:
       - name: SonarQube Scan - Backend
         uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: backend
 
   api-sonarqube:
     name: API SonarQube Scan
     runs-on: self-hosted
+    needs: backend-sonarqube
 
     steps:
       - name: Checkout Repository
@@ -52,7 +54,7 @@ jobs:
       - name: SonarQube Scan - API
         uses: SonarSource/sonarqube-scan-action@v5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: api
