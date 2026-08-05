@@ -14,7 +14,7 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Source
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: SonarQube Scan - Frontend
@@ -30,7 +30,7 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Source
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: SonarQube Scan - Backend
@@ -46,7 +46,7 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout Source
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: SonarQube Scan - API
