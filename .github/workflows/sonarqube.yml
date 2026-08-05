@@ -9,44 +9,56 @@ on:
       - main
 
 jobs:
-  frontend:
+
+  frontend-scan:
     name: Frontend SonarQube Scan
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          projectBaseDir: frontend
+          fetch-depth: 0
 
-  backend:
+      - name: SonarQube Frontend Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        working-directory: frontend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+  backend-scan:
     name: Backend SonarQube Scan
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          projectBaseDir: backend
+          fetch-depth: 0
 
-  api:
+      - name: SonarQube Backend Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        working-directory: backend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+  api-scan:
     name: API SonarQube Scan
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          projectBaseDir: api
+          fetch-depth: 0
+
+      - name: SonarQube API Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        working-directory: api
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
