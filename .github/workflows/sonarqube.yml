@@ -16,20 +16,17 @@ jobs:
 
     steps:
 
-      # Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      # Install Java (required by SonarQube Scanner)
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      # SonarQube Scan
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v6
         env:
